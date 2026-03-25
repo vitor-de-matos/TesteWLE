@@ -1,12 +1,12 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { IItemSaleRepo } from '../interface/item-sales-repo.interface';
-import { InjectRepository } from '@nestjs/typeorm';
-import { ItemSales } from '../entity/items-sale.entity';
-import { DB_PG_DATABASE } from 'src/shared/database/postgres.config';
-import { FindManyOptions, Repository } from 'typeorm';
-import { CreateItemSalesDTO } from '../dtos/create-items-sale.dto';
-import { FindItemSalesDTO } from '../dtos/find-items-sale.dto';
-import { UpdateItemSalesDTO } from '../dtos/update-items-sale.dto';
+import { BadRequestException, Injectable } from "@nestjs/common";
+import { IItemSaleRepo } from "../interface/item-sales-repo.interface";
+import { InjectRepository } from "@nestjs/typeorm";
+import { ItemSales } from "../entity/items-sale.entity";
+import { DB_PG_DATABASE } from "src/shared/database/postgres.config";
+import { FindManyOptions, Repository } from "typeorm";
+import { CreateItemSalesDTO } from "../dtos/create-items-sale.dto";
+import { FindItemSalesDTO } from "../dtos/find-items-sale.dto";
+import { UpdateItemSalesDTO } from "../dtos/update-items-sale.dto";
 
 @Injectable()
 export class ItemSalesRepository implements IItemSaleRepo {
@@ -51,11 +51,11 @@ export class ItemSalesRepository implements IItemSaleRepo {
   }
 
   async findById(id: number): Promise<ItemSales> {
-    const product = await this.repository.findOne({ where: { id: id } });
-    if (!product) {
-      throw new BadRequestException('Item de venda não encontrado');
+    const itemSale = await this.repository.findOne({ where: { id: id } });
+    if (!itemSale) {
+      throw new BadRequestException("Item de venda não encontrado");
     }
-    return product;
+    return itemSale;
   }
 
   async update(
@@ -64,7 +64,7 @@ export class ItemSalesRepository implements IItemSaleRepo {
   ): Promise<ItemSales> {
     const product = await this.repository.findOne({ where: { id: productId } });
     if (!product) {
-      throw new BadRequestException('Item de venda não encontrado');
+      throw new BadRequestException("Item de venda não encontrado");
     }
 
     const updatedProduct = await this.repository.save({
@@ -78,7 +78,7 @@ export class ItemSalesRepository implements IItemSaleRepo {
   async delete(id: number): Promise<void> {
     const product = await this.repository.findOne({ where: { id: id } });
     if (!product) {
-      throw new BadRequestException('Item de venda não encontrado');
+      throw new BadRequestException("Item de venda não encontrado");
     }
 
     await this.repository.delete(id);
