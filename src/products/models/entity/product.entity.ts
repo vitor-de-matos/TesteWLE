@@ -1,4 +1,4 @@
-import { ItemSales } from 'src/items-sales/models/entity/items-sale.entity';
+import { ItemSales } from "src/items-sales/models/entity/items-sale.entity";
 import {
   Column,
   CreateDateColumn,
@@ -6,39 +6,39 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-} from 'typeorm';
+} from "typeorm";
 
-@Entity({ name: 'produt' })
+@Entity({ name: "product" })
 export class Product {
   @PrimaryGeneratedColumn()
   id: number;
 
   @CreateDateColumn({
-    name: 'created_at',
-    type: 'timestamptz',
-    default: () => 'now()',
+    name: "created_at",
+    type: "timestamptz",
+    default: () => "now()",
   })
   createdAt: Date;
 
   @UpdateDateColumn({
-    name: 'update_at',
-    type: 'timestamptz',
-    default: () => 'now()',
+    name: "update_at",
+    type: "timestamptz",
+    default: () => "now()",
   })
   updatedAt: Date;
 
-  @Column({ name: 'name', type: 'varchar' })
+  @Column({ name: "name", type: "varchar" })
   name: string;
 
-  @Column({ name: 'description', type: 'varchar' })
+  @Column({ name: "description", type: "varchar" })
   description: string;
 
-  @Column({ name: 'price', type: 'numeric' })
+  @Column({ name: "price", type: "numeric" })
   price: number;
 
-  @Column({ name: 'stock_quantity', type: 'number' })
+  @Column({ name: "stock_quantity", type: "int" })
   stockQuantity: number;
 
   @OneToMany(() => ItemSales, (ItemSales) => ItemSales.product)
-  itemSales: ItemSales;
+  itemSales: ItemSales[];
 }

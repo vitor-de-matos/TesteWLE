@@ -1,32 +1,31 @@
-import { Body, Controller, Inject, Post } from '@nestjs/common';
+import { Body, Controller, Inject, Post } from "@nestjs/common";
 import {
   ApiBody,
   ApiCreatedResponse,
   ApiInternalServerErrorResponse,
   ApiOperation,
   ApiTags,
-} from '@nestjs/swagger';
-import { CreateProductDTO } from 'src/products/models/dtos/create-product.dto';
-import { Product } from 'src/products/models/entity/product.entity';
-import { CreateItemSaleUseCase } from './create-item-sale.service';
-import { ItemSales } from 'src/items-sales/models/entity/items-sale.entity';
+} from "@nestjs/swagger";
+import { CreateItemSaleUseCase } from "./create-item-sale.service";
+import { ItemSales } from "src/items-sales/models/entity/items-sale.entity";
+import { CreateItemSalesDTO } from "src/items-sales/models/dtos/create-items-sale.dto";
 
-@ApiTags('Item Sale')
-@Controller('item_sale')
+@ApiTags("Item Sale")
+@Controller("item_sale")
 export class CreateItemSaleController {
   constructor(
     @Inject(CreateItemSaleUseCase)
     private readonly createItemSaleService: CreateItemSaleUseCase,
   ) {}
 
-  @ApiOperation({ summary: 'Adicionar produto' })
-  @ApiBody({ type: CreateProductDTO })
+  @ApiOperation({ summary: "Adicionar produto" })
+  @ApiBody({ type: CreateItemSalesDTO })
   @ApiCreatedResponse({ type: Number })
   @ApiInternalServerErrorResponse({
-    description: 'Erro interno entre em contato com o suporte.',
+    description: "Erro interno entre em contato com o suporte.",
   })
   @Post()
-  async create(@Body() productDTO: CreateProductDTO): Promise<ItemSales> {
-    return await this.createItemSaleService.create(productDTO);
+  async create(@Body() itemSaleDTO: CreateItemSalesDTO): Promise<ItemSales> {
+    return await this.createItemSaleService.create(itemSaleDTO);
   }
 }
