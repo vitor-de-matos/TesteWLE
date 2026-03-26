@@ -1,8 +1,9 @@
-import { DB_PG_SCHEMA } from 'src/shared/database/postgres.config';
+import { ItemSales } from 'src/items-sales/models/entity/items-sale.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -28,4 +29,7 @@ export class Sales {
 
   @Column({ name: 'total_value', type: 'numeric' })
   totalValue: number;
+
+  @OneToMany(() => ItemSales, (ItemSales) => ItemSales.sales)
+  itemSales: ItemSales[];
 }
