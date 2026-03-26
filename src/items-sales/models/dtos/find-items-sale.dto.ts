@@ -1,6 +1,6 @@
-import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsNumber, IsOptional } from 'class-validator';
-import { PaginationDTO } from 'src/shared/utils/dto/pagination.dto';
+import { ApiPropertyOptional } from "@nestjs/swagger";
+import { IsNumber, IsOptional } from "class-validator";
+import { PaginationDTO } from "src/shared/utils/dto/pagination.dto";
 
 export class FindItemSalesDTO extends PaginationDTO {
   @ApiPropertyOptional()
@@ -22,4 +22,9 @@ export class FindItemSalesDTO extends PaginationDTO {
   @IsOptional()
   @IsNumber()
   productId: number;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsNumber()
+  saleId: number;
 }

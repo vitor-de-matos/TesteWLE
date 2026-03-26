@@ -15,8 +15,12 @@ export class ItemSalesRepository implements IItemSaleRepo {
     private readonly repository: Repository<ItemSales>,
   ) {}
 
-  async create(productDTO: CreateItemSalesDTO): Promise<ItemSales> {
-    const result = await this.repository.save(productDTO);
+  async create(ItemSaleDTO: CreateItemSalesDTO): Promise<ItemSales> {
+    const result = await this.repository.save({
+      ...ItemSaleDTO,
+      product: ItemSaleDTO.productId ? { id: ItemSaleDTO.productId } : null,
+      sale: ItemSaleDTO.saleId ? { id: ItemSaleDTO.saleId } : null,
+    });
     return result;
   }
 
@@ -32,6 +36,7 @@ export class ItemSalesRepository implements IItemSaleRepo {
         ...(filters.unityValue && { description: filters.unityValue }),
         ...(filters.totalValue && { totalValue: filters.totalValue }),
         ...(filters.productId && { product: { id: filters.productId } }),
+        ...(filters.saleId && { sales: { id: filters.saleId } }),
       },
       ...(filters.page && filters.quantity
         ? {
@@ -42,12 +47,12 @@ export class ItemSalesRepository implements IItemSaleRepo {
       relations: { product: true },
     };
 
-    const [products, totalItems] =
+    const [itemSales, totalItems] =
       await this.repository.findAndCount(queryOptions);
 
     const totalPages = Math.ceil(totalItems / filters.quantity);
     const currentPage = filters.page || 1;
-    return { data: products, currentPage, totalPages, totalItems };
+    return { data: itemSales, currentPage, totalPages, totalItems };
   }
 
   async findById(id: number): Promise<ItemSales> {
@@ -59,25 +64,33 @@ export class ItemSalesRepository implements IItemSaleRepo {
   }
 
   async update(
-    productId: number,
-    productDTO: UpdateItemSalesDTO,
+    itemSaleId: number,
+    itemSaleDTO: UpdateItemSalesDTO,
   ): Promise<ItemSales> {
-    const product = await this.repository.findOne({ where: { id: productId } });
-    if (!product) {
+    const itemSale = await this.repository.findOne({
+      where: { id: itemSaleId },
+    });
+    if (!itemSale) {
       throw new BadRequestException("Item de venda não encontrado");
     }
 
-    const updatedProduct = await this.repository.save({
-      ...product,
-      ...productDTO,
+    const updated = await this.repository.save({
+      ...itemSale,
+      ...itemSaleDTO,
+
+      product: itemSaleDTO.productId
+        ? { id: itemSaleDTO.productId }
+        : itemSale.product,
+
+      sale: itemSaleDTO.saleId ? { id: itemSaleDTO.saleId } : itemSale.sales,
     });
 
-    return updatedProduct;
+    return updated;
   }
 
   async delete(id: number): Promise<void> {
-    const product = await this.repository.findOne({ where: { id: id } });
-    if (!product) {
+    const itemSale = await this.repository.findOne({ where: { id: id } });
+    if (!itemSale) {
       throw new BadRequestException("Item de venda não encontrado");
     }
 

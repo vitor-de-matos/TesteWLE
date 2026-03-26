@@ -6,8 +6,9 @@ import {
   ApiOperation,
   ApiTags,
 } from "@nestjs/swagger";
-import { FindItemSaleUseCase } from "./find-item-sale.use-case";
+import { FindItemSaleUseCase } from "./find-item-sale.service";
 import { ItemSales } from "src/items-sales/models/entity/items-sale.entity";
+import { itemSaleDTO } from "src/items-sales/models/dtos/item-sale.dto";
 
 @ApiTags("Item Sale")
 @Controller("item_sale")
@@ -17,13 +18,13 @@ export class FindItemSaleController {
     private readonly itemSaleService: FindItemSaleUseCase,
   ) {}
 
-  @ApiOperation({})
-  @ApiOkResponse({})
-  @ApiNotFoundResponse({})
+  @ApiOperation({ description: "Busca um item de venda por ID" })
+  @ApiOkResponse({ type: itemSaleDTO })
+  @ApiNotFoundResponse({ description: "Item de venda não encontrado" })
   @ApiInternalServerErrorResponse({
     description: "Erro interno entre em contato com o suporte.",
   })
-  @Get()
+  @Get(":id")
   async find(@Param("id") id: number): Promise<ItemSales> {
     return await this.itemSaleService.find(id);
   }

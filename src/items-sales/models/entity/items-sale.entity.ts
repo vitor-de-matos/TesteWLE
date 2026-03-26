@@ -1,4 +1,5 @@
 import { Product } from "src/products/models/entity/product.entity";
+import { Sales } from "src/sales/models/entity/sales.entity";
 import {
   Column,
   CreateDateColumn,
@@ -42,4 +43,10 @@ export class ItemSales {
   })
   @JoinColumn({ name: "product_id" })
   product: Product;
+
+  @ManyToOne(() => Sales, (sales) => sales.itemSales, {
+    nullable: false,
+  })
+  @JoinColumn({ name: "sales_id" })
+  sales: Sales;
 }

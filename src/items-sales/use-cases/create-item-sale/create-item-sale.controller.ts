@@ -18,7 +18,7 @@ export class CreateItemSaleController {
     private readonly createItemSaleService: CreateItemSaleUseCase,
   ) {}
 
-  @ApiOperation({ summary: "Adicionar produto" })
+  @ApiOperation({ summary: "Adicionar item a venda" })
   @ApiBody({ type: CreateItemSalesDTO })
   @ApiCreatedResponse({ type: Number })
   @ApiInternalServerErrorResponse({
