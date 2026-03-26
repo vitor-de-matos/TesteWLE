@@ -7,6 +7,7 @@ import { FindManyOptions, Repository } from "typeorm";
 import { CreateItemSalesDTO } from "../dtos/create-items-sale.dto";
 import { FindItemSalesDTO } from "../dtos/find-items-sale.dto";
 import { UpdateItemSalesDTO } from "../dtos/update-items-sale.dto";
+import { itemSaleDTO } from "../dtos/item-sale.dto";
 
 @Injectable()
 export class ItemSalesRepository implements IItemSaleRepo {
@@ -15,11 +16,11 @@ export class ItemSalesRepository implements IItemSaleRepo {
     private readonly repository: Repository<ItemSales>,
   ) {}
 
-  async create(ItemSaleDTO: CreateItemSalesDTO): Promise<ItemSales> {
+  async create(itemSaleDTO: CreateItemSalesDTO): Promise<ItemSales> {
     const result = await this.repository.save({
-      ...ItemSaleDTO,
-      product: ItemSaleDTO.productId ? { id: ItemSaleDTO.productId } : null,
-      sale: ItemSaleDTO.saleId ? { id: ItemSaleDTO.saleId } : null,
+      ...itemSaleDTO,
+      product: itemSaleDTO.productId ? { id: itemSaleDTO.productId } : null,
+      sales: itemSaleDTO.saleId ? { id: itemSaleDTO.saleId } : null,
     });
     return result;
   }
@@ -50,7 +51,7 @@ export class ItemSalesRepository implements IItemSaleRepo {
     const [itemSales, totalItems] =
       await this.repository.findAndCount(queryOptions);
 
-    const totalPages = Math.ceil(totalItems / filters.quantity);
+    const totalPages = Math.ceil(totalItems / filters.quantity) || 1;
     const currentPage = filters.page || 1;
     return { data: itemSales, currentPage, totalPages, totalItems };
   }

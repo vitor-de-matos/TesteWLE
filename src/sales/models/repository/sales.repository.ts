@@ -62,7 +62,7 @@ export class SalesRepository implements ISalesRepo {
     const [sales, totalItems] =
       await this.repository.findAndCount(queryOptions);
 
-    const totalPages = Math.ceil(totalItems / filters.quantity);
+    const totalPages = Math.ceil(totalItems / filters.quantity) || 1;
     const currentPage = filters.page || 1;
     return { data: sales, currentPage, totalPages, totalItems };
   }

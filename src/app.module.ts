@@ -1,12 +1,12 @@
-import { Module } from '@nestjs/common';
-import { SharedModule } from './shared/shared.module';
-import { ProductsModule } from './products/products.module';
-import { SalesModule } from './sales/sales.module';
-import { ItemsSalesModule } from './items-sales/items-sales.module';
-import { ConfigModule } from '@nestjs/config';
-import { config } from './shared/config/config';
-import { ScheduleModule } from '@nestjs/schedule';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { Module } from "@nestjs/common";
+import { SharedModule } from "./shared/shared.module";
+import { ProductsModule } from "./products/products.module";
+import { SalesModule } from "./sales/sales.module";
+import { ItemSalesModule } from "./items-sales/items-sales.module";
+import { ConfigModule } from "@nestjs/config";
+import { config } from "./shared/config/config";
+import { ScheduleModule } from "@nestjs/schedule";
+import { TypeOrmModule } from "@nestjs/typeorm";
 
 @Module({
   imports: [
@@ -14,12 +14,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     ConfigModule.forRoot({
       isGlobal: true,
       load: [config],
-      envFilePath: ['.env'],
+      envFilePath: [".env"],
     }),
     SharedModule,
     ProductsModule,
     SalesModule,
-    ItemsSalesModule,
+    ItemSalesModule,
   ],
   controllers: [],
   providers: [],

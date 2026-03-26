@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Inject } from "@nestjs/common";
+import { Body, Controller, Get, Inject, Query } from "@nestjs/common";
 import {
   ApiInternalServerErrorResponse,
   ApiOperation,
@@ -20,8 +20,8 @@ export class FindAllSaleController {
   @ApiInternalServerErrorResponse({
     description: "Erro interno entre em contato com o suporte.",
   })
-  @Get("all")
-  async find(@Body() saleDTO: FindSalesDTO): Promise<{
+  @Get()
+  async find(@Query() saleDTO: FindSalesDTO): Promise<{
     data: Sales[];
     currentPage: number;
     totalPages: number;

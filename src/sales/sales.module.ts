@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { forwardRef, Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { Sales } from "./models/entity/sales.entity";
 import { DB_PG_DATABASE } from "src/shared/database/postgres.config";
@@ -12,9 +12,14 @@ import { CreateSaleUseCase } from "./use-cases/create-sales/create-sales.service
 import { FindSaleUseCase } from "./use-cases/find-sales/find-sales.service";
 import { FindAllSaleUseCase } from "./use-cases/find-all-sales-filtered/find-all-sales.use-case";
 import { DeleteSaleUseCase } from "./use-cases/delete-sales/delete-sales.service";
+import { ItemSalesModule } from "src/items-sales/items-sales.module";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Sales], DB_PG_DATABASE), SharedModule],
+  imports: [
+    TypeOrmModule.forFeature([Sales], DB_PG_DATABASE),
+    SharedModule,
+    forwardRef(() => ItemSalesModule),
+  ],
   controllers: [
     CreateSaleController,
     FindSaleController,

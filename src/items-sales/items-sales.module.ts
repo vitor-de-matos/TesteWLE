@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { forwardRef, Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ItemSales } from "./models/entity/items-sale.entity";
 import { DB_PG_DATABASE } from "src/shared/database/postgres.config";
@@ -22,7 +22,7 @@ import { ItemSalesRepository } from "./models/repository/item-sales.repository";
     TypeOrmModule.forFeature([ItemSales], DB_PG_DATABASE),
     SharedModule,
     ProductsModule,
-    SalesModule,
+    forwardRef(() => SalesModule),
   ],
   controllers: [
     CreateItemSaleController,
@@ -45,4 +45,4 @@ import { ItemSalesRepository } from "./models/repository/item-sales.repository";
   ],
   exports: ["IItemSaleRepo"],
 })
-export class ItemsSalesModule {}
+export class ItemSalesModule {}

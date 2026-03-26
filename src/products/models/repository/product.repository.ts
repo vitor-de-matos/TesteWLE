@@ -1,12 +1,12 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { IProductRepo } from '../interface/product-repo.interface';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Product } from '../entity/product.entity';
-import { DB_PG_DATABASE } from 'src/shared/database/postgres.config';
-import { FindManyOptions, ILike, Repository } from 'typeorm';
-import { CreateProductDTO } from '../dtos/create-product.dto';
-import { FindProductDTO } from '../dtos/find-product.dto';
-import { UpdateProductDTO } from '../dtos/update-prodct.dto';
+import { BadRequestException, Injectable } from "@nestjs/common";
+import { IProductRepo } from "../interface/product-repo.interface";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Product } from "../entity/product.entity";
+import { DB_PG_DATABASE } from "src/shared/database/postgres.config";
+import { FindManyOptions, ILike, Repository } from "typeorm";
+import { CreateProductDTO } from "../dtos/create-product.dto";
+import { FindProductDTO } from "../dtos/find-product.dto";
+import { UpdateProductDTO } from "../dtos/update-prodct.dto";
 
 @Injectable()
 export class ProductRepository implements IProductRepo {
@@ -46,7 +46,7 @@ export class ProductRepository implements IProductRepo {
     const [products, totalItems] =
       await this.repository.findAndCount(queryOptions);
 
-    const totalPages = Math.ceil(totalItems / filters.quantity);
+    const totalPages = Math.ceil(totalItems / filters.quantity) || 1;
     const currentPage = filters.page || 1;
     return { data: products, currentPage, totalPages, totalItems };
   }
@@ -54,7 +54,7 @@ export class ProductRepository implements IProductRepo {
   async findById(id: number): Promise<Product> {
     const product = await this.repository.findOne({ where: { id: id } });
     if (!product) {
-      throw new BadRequestException('Produto não encontrado');
+      throw new BadRequestException("Produto não encontrado");
     }
     return product;
   }
@@ -65,7 +65,7 @@ export class ProductRepository implements IProductRepo {
   ): Promise<Product> {
     const product = await this.repository.findOne({ where: { id: productId } });
     if (!product) {
-      throw new BadRequestException('Produto não encontrado');
+      throw new BadRequestException("Produto não encontrado");
     }
 
     const updatedProduct = await this.repository.save({
@@ -79,7 +79,7 @@ export class ProductRepository implements IProductRepo {
   async delete(id: number): Promise<void> {
     const product = await this.repository.findOne({ where: { id: id } });
     if (!product) {
-      throw new BadRequestException('Produto não encontrado');
+      throw new BadRequestException("Produto não encontrado");
     }
 
     await this.repository.delete(id);

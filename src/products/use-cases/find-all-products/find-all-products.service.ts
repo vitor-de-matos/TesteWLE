@@ -1,12 +1,12 @@
-import { Injectable, Inject } from '@nestjs/common';
-import { FindProductDTO } from 'src/products/models/dtos/find-product.dto';
-import { Product } from 'src/products/models/entity/product.entity';
-import type { IProductRepo } from 'src/products/models/interface/product-repo.interface';
+import { Injectable, Inject } from "@nestjs/common";
+import { FindProductDTO } from "src/products/models/dtos/find-product.dto";
+import { Product } from "src/products/models/entity/product.entity";
+import type { IProductRepo } from "src/products/models/interface/product-repo.interface";
 
 @Injectable()
 export class FindAllProductUseCase {
   constructor(
-    @Inject('IProductRepo')
+    @Inject("IProductRepo")
     private readonly productRepository: IProductRepo,
   ) {}
 

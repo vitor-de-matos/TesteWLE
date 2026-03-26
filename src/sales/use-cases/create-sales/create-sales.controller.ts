@@ -1,6 +1,5 @@
-import { Controller, Inject, Post } from "@nestjs/common";
+import { Body, Controller, Inject, Post } from "@nestjs/common";
 import {
-  ApiBody,
   ApiInternalServerErrorResponse,
   ApiOperation,
   ApiTags,
@@ -19,12 +18,11 @@ export class CreateSaleController {
   @ApiOperation({
     summary: "Cria uma venda que sera calculada automaticamente",
   })
-  @ApiBody({ type: CreateSalesDTO })
   @ApiInternalServerErrorResponse({
     description: "Erro interno entre em contato com o suporte.",
   })
   @Post()
-  async create(): Promise<number> {
-    return await this.createSaleService.create();
+  async create(@Body() salesDTO: CreateSalesDTO): Promise<number> {
+    return await this.createSaleService.create(salesDTO);
   }
 }
