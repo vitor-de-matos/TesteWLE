@@ -1,9 +1,9 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsNumber } from "class-validator";
+import { ApiPropertyOptional } from "@nestjs/swagger";
+import { IsNumber, IsOptional } from "class-validator";
 
 export class CreateSalesDTO {
-  @ApiProperty({ description: "Valor total da venda", example: 100.5 })
-  @IsNotEmpty()
+  @ApiPropertyOptional({ description: "Valor total da venda", readOnly: true })
+  @IsOptional()
   @IsNumber()
-  totalValue: number;
+  totalValue?: number;
 }

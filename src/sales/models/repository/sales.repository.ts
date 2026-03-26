@@ -68,7 +68,10 @@ export class SalesRepository implements ISalesRepo {
   }
 
   async findById(id: number): Promise<Sales> {
-    const sales = await this.repository.findOne({ where: { id: id } });
+    const sales = await this.repository.findOne({
+      where: { id: id },
+      relations: { itemSales: true },
+    });
     if (!sales) {
       throw new BadRequestException("Venda não encontrada");
     }
