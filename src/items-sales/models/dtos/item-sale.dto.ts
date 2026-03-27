@@ -1,6 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { ProductDTO } from "src/products/models/dtos/product.dto";
 
-export class itemSaleDTO {
+export class ItemSaleDTO {
   @ApiProperty()
   id: number;
 
@@ -24,4 +25,7 @@ export class itemSaleDTO {
 
   @ApiProperty()
   updatedAt: Date;
+
+  @ApiProperty({ type: () => ProductDTO })
+  product: ProductDTO;
 }

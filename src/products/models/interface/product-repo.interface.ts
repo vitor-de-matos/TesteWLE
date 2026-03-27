@@ -1,7 +1,7 @@
-import { CreateProductDTO } from '../dtos/create-product.dto';
-import { FindProductDTO } from '../dtos/find-product.dto';
-import { UpdateProductDTO } from '../dtos/update-prodct.dto';
-import { Product } from '../entity/product.entity';
+import { CreateProductDTO } from "../dtos/create-product.dto";
+import { FindProductDTO } from "../dtos/find-product.dto";
+import { UpdateProductDTO } from "../dtos/update-prodct.dto";
+import { Product } from "../entity/product.entity";
 
 export interface IProductRepo {
   create(productDTO: CreateProductDTO): Promise<Product>;
@@ -12,6 +12,7 @@ export interface IProductRepo {
     totalItems: number;
   }>;
   findById(id: number): Promise<Product>;
+  findByName(name: string): Promise<void>;
   update(productId: number, productDTO: UpdateProductDTO): Promise<Product>;
   delete(id: number): Promise<void>;
 }

@@ -8,7 +8,7 @@ import {
 } from "@nestjs/swagger";
 import { FindItemSaleUseCase } from "./find-item-sale.service";
 import { ItemSales } from "src/items-sales/models/entity/items-sale.entity";
-import { itemSaleDTO } from "src/items-sales/models/dtos/item-sale.dto";
+import { ItemSaleDTO } from "src/items-sales/models/dtos/item-sale.dto";
 
 @ApiTags("Item Sale")
 @Controller("item_sale")
@@ -19,7 +19,7 @@ export class FindItemSaleController {
   ) {}
 
   @ApiOperation({ description: "Busca um item de venda por ID" })
-  @ApiOkResponse({ type: itemSaleDTO })
+  @ApiOkResponse({ type: ItemSaleDTO })
   @ApiNotFoundResponse({ description: "Item de venda não encontrado" })
   @ApiInternalServerErrorResponse({
     description: "Erro interno entre em contato com o suporte.",

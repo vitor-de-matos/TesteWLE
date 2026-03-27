@@ -7,7 +7,7 @@ import { FindManyOptions, Repository } from "typeorm";
 import { CreateItemSalesDTO } from "../dtos/create-items-sale.dto";
 import { FindItemSalesDTO } from "../dtos/find-items-sale.dto";
 import { UpdateItemSalesDTO } from "../dtos/update-items-sale.dto";
-import { itemSaleDTO } from "../dtos/item-sale.dto";
+import { ItemSaleDTO } from "../dtos/item-sale.dto";
 
 @Injectable()
 export class ItemSalesRepository implements IItemSaleRepo {

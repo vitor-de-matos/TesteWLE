@@ -26,15 +26,15 @@ import { ItemSalesRepository } from "./models/repository/item-sales.repository";
   ],
   controllers: [
     CreateItemSaleController,
-    FindItemSaleController,
     FindAllItemSaleController,
+    FindItemSaleController,
     UpdateItemSaleController,
     DeleteItemSaleController,
   ],
   providers: [
     CreateItemSaleUseCase,
-    FindItemSaleUseCase,
     FindAllItemSaleUseCase,
+    FindItemSaleUseCase,
     UpdateItemSaleUseCase,
     DeleteItemSaleUseCase,
     ItemSalesRepository,

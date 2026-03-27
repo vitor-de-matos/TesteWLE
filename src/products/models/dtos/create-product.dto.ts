@@ -9,26 +9,32 @@ import {
 } from "class-validator";
 
 export class CreateProductDTO {
-  @ApiProperty()
+  @ApiProperty({ description: "Nome do produto" })
   @IsString()
   @IsNotEmpty()
   name: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    description: "Descrição do produto com no maximo 50 caracteres",
+  })
   @IsString()
   @Max(50)
   @IsNotEmpty()
   description: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    description: "Preço do produto, este valor não pode ser negativo",
+  })
   @IsNumber()
   @IsNotEmpty()
-  @Min(1)
+  @Min(0)
   price: number;
 
-  @ApiProperty()
+  @ApiProperty({
+    description: "Quantidade em estoque, este valor não pode ser negativo",
+  })
   @IsNotEmpty()
-  @Min(1)
+  @Min(0)
   @IsInt()
   stockQuantity: number;
 }

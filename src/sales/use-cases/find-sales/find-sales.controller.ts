@@ -14,6 +14,7 @@ import {
 } from "@nestjs/swagger";
 import { FindSaleUseCase } from "./find-sales.service";
 import { Sales } from "src/sales/models/entity/sales.entity";
+import { SalesDTO } from "src/sales/models/dtos/sales.dto";
 
 @ApiTags("Sale")
 @Controller("sale")
@@ -24,7 +25,7 @@ export class FindSaleController {
   ) {}
 
   @ApiOperation({ summary: "Busca venda por ID" })
-  @ApiOkResponse({ type: Sales })
+  @ApiOkResponse({ type: SalesDTO })
   @ApiNotAcceptableResponse({ description: "Id inválido." })
   @ApiInternalServerErrorResponse({
     description: "Erro interno entre em contato com o suporte.",

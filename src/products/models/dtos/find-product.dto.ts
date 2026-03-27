@@ -1,28 +1,22 @@
-import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsNumber, IsOptional, IsString, Max, Min } from 'class-validator';
-import { PaginationDTO } from 'src/shared/utils/dto/pagination.dto';
+import { ApiPropertyOptional } from "@nestjs/swagger";
+import { IsNumber, IsOptional, IsString, Max, Min } from "class-validator";
+import { PaginationDTO } from "src/shared/utils/dto/pagination.dto";
 
 export class FindProductDTO extends PaginationDTO {
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ description: "Nome do produto" })
   @IsOptional()
   @IsString()
   name?: string;
 
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString()
-  @Max(50)
-  desription?: string;
-
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ description: "Valor do produto" })
   @IsOptional()
   @IsNumber()
-  @Min(1)
+  @Min(0)
   price?: number;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ description: "Quantidade em estoque" })
   @IsOptional()
   @IsNumber()
-  @Min(1)
+  @Min(0)
   stockQuantity?: number;
 }

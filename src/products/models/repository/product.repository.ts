@@ -29,9 +29,6 @@ export class ProductRepository implements IProductRepo {
     const queryOptions: FindManyOptions<Product> = {
       where: {
         ...(filters.name && { name: ILike(`%${filters.name}%`) }),
-        ...(filters.desription && {
-          description: ILike(`%${filters.desription}%`),
-        }),
         ...(filters.price && { price: filters.price }),
         ...(filters.stockQuantity && { stockQuantity: filters.stockQuantity }),
       },
@@ -57,6 +54,13 @@ export class ProductRepository implements IProductRepo {
       throw new BadRequestException("Produto não encontrado");
     }
     return product;
+  }
+
+  async findByName(name: string): Promise<void> {
+    const product = await this.repository.findOne({ where: { name: name } });
+    if (product) {
+      throw new BadRequestException("Produto já existe");
+    }
   }
 
   async update(

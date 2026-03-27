@@ -22,14 +22,14 @@ import { ItemSalesModule } from "src/items-sales/items-sales.module";
   ],
   controllers: [
     CreateSaleController,
-    FindSaleController,
     FindAllSaleController,
+    FindSaleController,
     DeleteSaleController,
   ],
   providers: [
     CreateSaleUseCase,
-    FindSaleUseCase,
     FindAllSaleUseCase,
+    FindSaleUseCase,
     DeleteSaleUseCase,
     SalesRepository,
     { provide: "ISalesRepo", useExisting: SalesRepository },

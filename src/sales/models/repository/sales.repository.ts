@@ -56,7 +56,7 @@ export class SalesRepository implements ISalesRepo {
             skip: (filters.page - 1) * filters.quantity,
           }
         : {}),
-      relations: { itemSales: true },
+      relations: { itemSales: { product: true } },
     };
 
     const [sales, totalItems] =
@@ -70,7 +70,7 @@ export class SalesRepository implements ISalesRepo {
   async findById(id: number): Promise<Sales> {
     const sales = await this.repository.findOne({
       where: { id: id },
-      relations: { itemSales: true },
+      relations: { itemSales: { product: true } },
     });
     if (!sales) {
       throw new BadRequestException("Venda não encontrada");

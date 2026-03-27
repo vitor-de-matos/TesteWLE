@@ -11,9 +11,16 @@ export class CreateProductUseCase {
   ) {}
 
   async create(productDTO: CreateProductDTO): Promise<Product> {
+    await this.productRepository.findByName(productDTO.name);
+
     if (productDTO.stockQuantity < 0) {
       throw new BadRequestException("Estoque não pode estar negativo");
     }
+
+    if (productDTO.price < 0) {
+      throw new BadRequestException("Preço não pode estar negativo");
+    }
+
     const produtCreated = await this.productRepository.create(productDTO);
     return produtCreated;
   }
