@@ -36,27 +36,33 @@ $ npm install
 O projeto usa o `docker-compose.yml` para subir apenas o banco Postgres (serviço `postgres`). Para rodar:
 
 No diretório raiz do projeto (onde está o arquivo `docker-compose.yml`), rode:
+
 ```bash
 docker compose up -d
 ```
 
 Verifique se o container está rodando:
+
 ```bash
 docker compose ps
 ```
 
 Para acompanhar os logs do Postgres:
+
 ```bash
 docker compose logs -f postgres
 ```
+
 (para parar, use `Ctrl + C`)
 
 Para parar/remover os containers:
+
 ```bash
 docker compose down
 ```
 
 Observações:
+
 - O Postgres expõe a porta `5432` no host (`5432:5432`).
 - O volume nomeado `postgres-data` é usado para persistir os dados do banco.
 
@@ -67,11 +73,13 @@ O Nest carrega as variáveis do arquivo `.env` (definidas no `AppModule`) e o Ty
 Obs.: o `TypeORM` está com `synchronize: true`, então ao subir o app ele tenta criar/atualizar as tabelas conforme as entidades.
 
 Garanta que os valores de `DB_PG_*` no seu `.env` estejam compatíveis com o `docker-compose.yml`. No `docker-compose.yml` os valores padrão são:
+
 - `POSTGRES_USER=pguser`
 - `POSTGRES_PASSWORD=pgpassword`
 - `POSTGRES_DB=sales_database`
 
 No `.env` (exemplo em `exemple.env`) ajuste para:
+
 - `DB_PG_HOST=localhost`
 - `DB_PG_PORT=5432`
 - `DB_PG_USERNAME=pguser`
@@ -80,6 +88,7 @@ No `.env` (exemplo em `exemple.env`) ajuste para:
 - `DB_PG_SCHEMA=public`
 
 Depois disso, você pode iniciar a aplicação normalmente:
+
 ```bash
 npm run start:dev
 ```
@@ -89,6 +98,7 @@ npm run start:dev
 Quando `PRODUCTION=false`, a documentação Swagger fica disponível em `http://localhost:<PORT>/api` (ex.: `http://localhost:3003/api`).
 
 Status atual do projeto:
+
 - **Sem testes automatizados**: os comandos de teste listados abaixo vêm do template do NestJS e **ainda não foram implementados/ajustados** para este projeto.
 - **Rodando apenas em desenvolvimento**: o uso e execução esperados hoje são via `npm run start:dev` (modo dev / watch).
 
@@ -99,47 +109,51 @@ Status atual do projeto:
 - **Ao inserir um item na venda**, a API:
   - Busca o produto
   - Valida se há estoque suficiente
-  - Define automaticamente `unityValue` (preço do produto) e `totalValue` do item (\(itemQuantity \times unityValue\))
+  - Define automaticamente `unityValue` (preço do produto) e `totalValue` do item (\(itemQuantity multiplicado por unityValue\))
   - Atualiza o `totalValue` da venda (somando o valor do item)
   - Atualiza o estoque do produto (subtraindo a quantidade vendida)
 - **Se a venda “deixaria” o estoque negativo**, a API retorna erro (ex.: “Quantidade de produto insuficiente no estoque”).
 
 ### Fluxo recomendado
 
-1) **Criar produto**
+1. **Criar produto**
 
 - Endpoint: `POST /product`
 - Exemplo:
+
 ```bash
 curl -X POST http://localhost:3003/product ^
   -H "Content-Type: application/json" ^
   -d "{\"name\":\"Teclado\",\"description\":\"Teclado mecânico\",\"price\":100,\"stockQuantity\":10}"
 ```
 
-2) **Criar venda (sale)**: ela é criada com `totalValue=0` e o endpoint **retorna o `id`** da venda para você inserir os itens.
+2. **Criar venda (sale)**: ela é criada com `totalValue=0` e o endpoint **retorna o `id`** da venda para você inserir os itens.
 
 - Endpoint: `POST /sale`
 - Exemplo:
+
 ```bash
 curl -X POST http://localhost:3003/sale ^
   -H "Content-Type: application/json" ^
   -d "{}"
 ```
 
-3) **Inserir itens na venda**
+3. **Inserir itens na venda**
 
 - Endpoint: `POST /item_sale`
 - Exemplo (com `saleId` retornado no passo anterior e `productId` de um produto existente):
+
 ```bash
 curl -X POST http://localhost:3003/item_sale ^
   -H "Content-Type: application/json" ^
   -d "{\"saleId\":1,\"productId\":1,\"itemQuantity\":2}"
 ```
 
-4) **Consultar a venda** (para ver o `totalValue` atualizado)
+4. **Consultar a venda** (para ver o `totalValue` atualizado)
 
 - Endpoint: `GET /sale/:id`
 - Exemplo:
+
 ```bash
 curl http://localhost:3003/sale/1
 ```
@@ -151,6 +165,7 @@ Ao remover um item de venda, a API **devolve o estoque** ao produto e **subtrai*
 ## Compile and run the project
 
 Obs.: no estado atual do projeto, o uso principal é em **desenvolvimento**:
+
 ```bash
 npm run start:dev
 ```
